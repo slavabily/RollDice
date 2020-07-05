@@ -12,26 +12,25 @@ struct ContentView: View {
     @State private var rolledNumber = Int()
     @State private var score = 0
     
-    var diceTypes = ["4", "6"]
-    @State private var diceTypeSelection = 0
+    var diceSides = ["4", "6"]
+    @State private var diceSideSelection = 0
     
     var body: some View {
         TabView {
             NavigationView {
-                
                 VStack {
                     Form {
-                        Section {
-                            Picker(selection: $diceTypeSelection, label: Text("Select the dice type")) {
-                                ForEach(0..<diceTypes.count) {
-                                    Text(self.diceTypes[$0])
+                        Section(header: Text("Select the dice type")) {
+                            Picker(selection: $diceSideSelection, label: Text("Select the dice type")) {
+                                ForEach(0..<diceSides.count) {
+                                    Text(self.diceSides[$0])
                                 }
                             }.pickerStyle(SegmentedPickerStyle())
                         }
                         
                         Section {
                             Button("Roll") {
-                                self.randomNumber()
+                                self.rollDice()
                             }
                             .font(.largeTitle)
                             
@@ -39,9 +38,6 @@ struct ContentView: View {
                                 .padding()
                         }
                     }
-                   
-                    
-                    
                 }
                 .navigationBarTitle("Roll the Dice")
             }
@@ -66,12 +62,19 @@ struct ContentView: View {
         }
     }
     
-    func randomNumber() {
-        let number = Int.random(in: 1...6)
-        
-        rolledNumber = number
-        
-        score += number
+    func rollDice() {
+        switch diceSideSelection {
+        case 0:
+            let number = Int.random(in: 1...4)
+            rolledNumber = number
+            score += number
+        case 1:
+            let number = Int.random(in: 1...6)
+            rolledNumber = number
+            score += number
+        default:
+            break
+        }
     }
 }
 

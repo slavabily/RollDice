@@ -9,33 +9,43 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var rolledNumber = Int()
+    var dice = Dice()
+    
+    @State private var totalRolled = 0
     @State private var score = 0
-    
-    @ObservedObject var dice = Dice()
-    
     @State private var diceSideSelection = 0
+    @State private var diceQuantitySelection = 0
+    
+    let diceQuantity = ["1", "2", "3"]
     
     var body: some View {
         TabView {
             NavigationView {
                 VStack {
                     Form {
-                        Section(header: Text("Select the dice type")) {
-                            Picker(selection: $diceSideSelection, label: Text("Select the dice type")) {
+                        Section(header: Text("Select the type of dice")) {
+                            Picker(selection: $diceSideSelection, label: Text("")) {
                                 ForEach(0..<dice.sides.count) {
                                     Text(self.dice.sides[$0])
                                 }
                             }.pickerStyle(SegmentedPickerStyle())
                         }
                         
+                        Section(header: Text("Select the quantity of dices")) {
+                            Picker(selection: $diceQuantitySelection, label: Text("")) {
+                                ForEach(0..<diceQuantity.count) {
+                                    Text(self.diceQuantity[$0])
+                                }
+                            }.pickerStyle(SegmentedPickerStyle())
+                        }
+                        
                         Section {
                             Button("Roll") {
-                                self.rollDice()
+                                self.rollDices()
                             }
                             .font(.largeTitle)
                             
-                            Text("Number: \(rolledNumber != 0 ? "\(rolledNumber)" : "")")
+                            Text("Total rolled: \(totalRolled != 0 ? "\(totalRolled)" : "")")
                                 .padding()
                         }
                     }
@@ -63,11 +73,13 @@ struct ContentView: View {
         }
     }
     
-    func rollDice() {
-        
-      let number = Int.random(in: 1...Int(dice.sides[diceSideSelection])!)
-        rolledNumber = number
-        score += number
+    func rollDices() {
+        totalRolled = 0
+        for _ in 1...diceQuantitySelection + 1 {
+           let number = Int.random(in: 1...Int(dice.sides[diceSideSelection])!)
+            totalRolled += number
+        }
+        score += totalRolled
     }
  }
 

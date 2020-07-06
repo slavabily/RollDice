@@ -8,8 +8,8 @@
 
 import SwiftUI
 
-class Dice: ObservableObject  {
-    var sides = ["4", "6", "8"]
+struct Dice   {
+    let sides = ["4", "6", "8"]
 }
 
  

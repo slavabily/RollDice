@@ -12,7 +12,8 @@ struct ContentView: View {
     @State private var rolledNumber = Int()
     @State private var score = 0
     
-    var diceSides = ["4", "6"]
+    @ObservedObject var dice = Dice()
+    
     @State private var diceSideSelection = 0
     
     var body: some View {
@@ -22,8 +23,8 @@ struct ContentView: View {
                     Form {
                         Section(header: Text("Select the dice type")) {
                             Picker(selection: $diceSideSelection, label: Text("Select the dice type")) {
-                                ForEach(0..<diceSides.count) {
-                                    Text(self.diceSides[$0])
+                                ForEach(0..<dice.sides.count) {
+                                    Text(self.dice.sides[$0])
                                 }
                             }.pickerStyle(SegmentedPickerStyle())
                         }
@@ -63,20 +64,12 @@ struct ContentView: View {
     }
     
     func rollDice() {
-        switch diceSideSelection {
-        case 0:
-            let number = Int.random(in: 1...4)
-            rolledNumber = number
-            score += number
-        case 1:
-            let number = Int.random(in: 1...6)
-            rolledNumber = number
-            score += number
-        default:
-            break
-        }
+        
+      let number = Int.random(in: 1...Int(dice.sides[diceSideSelection])!)
+        rolledNumber = number
+        score += number
     }
-}
+ }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

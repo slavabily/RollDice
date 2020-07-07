@@ -11,10 +11,11 @@ import SwiftUI
 struct ContentView: View {
     var dice = Dice()
     
-    @State private var totalRolled = 0
+    @State private var rolledResult = 0
     @State private var score = 0
     @State private var diceSideSelection = 0
     @State private var diceQuantitySelection = 0
+    @State private var results = [Int]()
     
     let diceQuantity = ["1", "2", "3"]
     
@@ -44,9 +45,6 @@ struct ContentView: View {
                                 self.rollDices()
                             }
                             .font(.largeTitle)
-                            
-                            Text("Total rolled: \(totalRolled != 0 ? "\(totalRolled)" : "")")
-                                .padding()
                         }
                     }
                 }
@@ -60,6 +58,10 @@ struct ContentView: View {
             
             NavigationView {
                 VStack {
+                    List(results, id: \.self) {
+                        Text("\($0)")
+                    }
+                    
                     Text("Score: \(score)")
                         .font(.largeTitle)
                 }
@@ -74,12 +76,33 @@ struct ContentView: View {
     }
     
     func rollDices() {
-        totalRolled = 0
-        for _ in 1...diceQuantitySelection + 1 {
-           let number = Int.random(in: 1...Int(dice.sides[diceSideSelection])!)
-            totalRolled += number
+        rolledResult = 0
+        
+        switch diceQuantitySelection {
+        case 0:
+            let number = Int.random(in: 1...Int(dice.sides[diceSideSelection])!)
+            rolledResult = number
+            results.append(rolledResult)
+        case 1:
+            let number1 = Int.random(in: 1...Int(dice.sides[diceSideSelection])!)
+            rolledResult = number1
+            results.append(rolledResult)
+            let number2 = Int.random(in: 1...Int(dice.sides[diceSideSelection])!)
+            rolledResult = number2
+            results.append(rolledResult)
+        case 2:
+            let number1 = Int.random(in: 1...Int(dice.sides[diceSideSelection])!)
+            rolledResult = number1
+            results.append(rolledResult)
+            let number2 = Int.random(in: 1...Int(dice.sides[diceSideSelection])!)
+            rolledResult = number2
+            results.append(rolledResult)
+            let number3 = Int.random(in: 1...Int(dice.sides[diceSideSelection])!)
+            rolledResult = number3
+            results.append(rolledResult)
+        default:
+            break
         }
-        score += totalRolled
     }
  }
 

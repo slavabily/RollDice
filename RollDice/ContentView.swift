@@ -64,7 +64,7 @@ struct ContentView: View {
                         }
                     }
                     
-                    Text("Score: \(score)")
+                    Text("Total: \(results.reduce(0, +))")
                         .font(.largeTitle)
                 }
                 .navigationBarTitle("Results")

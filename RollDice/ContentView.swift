@@ -58,8 +58,10 @@ struct ContentView: View {
             
             NavigationView {
                 VStack {
-                    List(results, id: \.self) {
-                        Text("\($0)")
+                    List {
+                        ForEach(0..<results.count) {
+                            Text("Dice\($0 + 1):  \(self.results[$0])")
+                        }
                     }
                     
                     Text("Score: \(score)")
@@ -84,22 +86,17 @@ struct ContentView: View {
             rolledResult = number
             results.append(rolledResult)
         case 1:
-            let number1 = Int.random(in: 1...Int(dice.sides[diceSideSelection])!)
-            rolledResult = number1
-            results.append(rolledResult)
-            let number2 = Int.random(in: 1...Int(dice.sides[diceSideSelection])!)
-            rolledResult = number2
-            results.append(rolledResult)
+            for _ in 0...1 {
+                let number = Int.random(in: 1...Int(dice.sides[diceSideSelection])!)
+                rolledResult = number
+                results.append(rolledResult)
+            }
         case 2:
-            let number1 = Int.random(in: 1...Int(dice.sides[diceSideSelection])!)
-            rolledResult = number1
-            results.append(rolledResult)
-            let number2 = Int.random(in: 1...Int(dice.sides[diceSideSelection])!)
-            rolledResult = number2
-            results.append(rolledResult)
-            let number3 = Int.random(in: 1...Int(dice.sides[diceSideSelection])!)
-            rolledResult = number3
-            results.append(rolledResult)
+            for _ in 0...2 {
+                let number = Int.random(in: 1...Int(dice.sides[diceSideSelection])!)
+                rolledResult = number
+                results.append(rolledResult)
+            }
         default:
             break
         }

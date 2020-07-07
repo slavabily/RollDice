@@ -60,7 +60,7 @@ struct ContentView: View {
                 VStack {
                     List {
                         ForEach(0..<results.count) {
-                            Text("Dice\($0 + 1):  \(self.results[$0])")
+                            Text("Dice \($0 + 1):       \(self.results[$0])")
                         }
                     }
                     
@@ -79,6 +79,7 @@ struct ContentView: View {
     
     func rollDices() {
         rolledResult = 0
+        results.removeAll()
         
         switch diceQuantitySelection {
         case 0:

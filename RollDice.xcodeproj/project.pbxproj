@@ -14,6 +14,7 @@
 		B92963DC24B0BDF8002548BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B92963DB24B0BDF8002548BA /* Assets.xcassets */; };
 		B92963DF24B0BDF8002548BA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B92963DE24B0BDF8002548BA /* Preview Assets.xcassets */; };
 		B92963E224B0BDF8002548BA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B92963E024B0BDF8002548BA /* LaunchScreen.storyboard */; };
+		B9E8820C24B5BC8A00EACAB8 /* RollDice.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B9E8820A24B5BC8A00EACAB8 /* RollDice.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		B92963DE24B0BDF8002548BA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B92963E124B0BDF8002548BA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B92963E324B0BDF8002548BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B9E8820B24B5BC8A00EACAB8 /* RollDice.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RollDice.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 			isa = PBXGroup;
 			children = (
 				B92963D524B0BDF5002548BA /* AppDelegate.swift */,
+				B9E8820A24B5BC8A00EACAB8 /* RollDice.xcdatamodeld */,
 				B92963D724B0BDF5002548BA /* SceneDelegate.swift */,
 				B9096DD124B3108700C99C89 /* Dice.swift */,
 				B92963D924B0BDF5002548BA /* ContentView.swift */,
@@ -151,6 +154,7 @@
 			files = (
 				B92963D624B0BDF5002548BA /* AppDelegate.swift in Sources */,
 				B92963D824B0BDF5002548BA /* SceneDelegate.swift in Sources */,
+				B9E8820C24B5BC8A00EACAB8 /* RollDice.xcdatamodeld in Sources */,
 				B9096DD224B3108700C99C89 /* Dice.swift in Sources */,
 				B92963DA24B0BDF5002548BA /* ContentView.swift in Sources */,
 			);
@@ -346,6 +350,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		B9E8820A24B5BC8A00EACAB8 /* RollDice.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				B9E8820B24B5BC8A00EACAB8 /* RollDice.xcdatamodel */,
+			);
+			currentVersion = B9E8820B24B5BC8A00EACAB8 /* RollDice.xcdatamodel */;
+			path = RollDice.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = B92963CA24B0BDF5002548BA /* Project object */;
 }

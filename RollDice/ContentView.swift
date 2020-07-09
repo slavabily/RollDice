@@ -7,12 +7,15 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct ContentView: View {
+    @Environment(\.managedObjectContext) var moc
+    @FetchRequest(entity: Roll.entity(), sortDescriptors: [NSSortDescriptor(key: "diceNumber", ascending: true)]) var resultsData: FetchedResults<Roll>
+    
     var dice = Dice()
     
     @State private var rolledResult = 0
-    @State private var score = 0
     @State private var diceSideSelection = 0
     @State private var diceQuantitySelection = 0
     @State private var results = [Int]()
@@ -59,8 +62,15 @@ struct ContentView: View {
             NavigationView {
                 VStack {
                     List {
-                        ForEach(0..<results.count) {
-                            Text("Dice \($0 + 1):       \(self.results[$0])")
+                        ForEach(resultsData, id: \.id) { roll in
+                            Text("Dice \(roll.diceNumber):     \(roll.result)")
+                        }
+                        .onDelete(perform: removeResults(at:))
+                        .onAppear {
+                            self.results.removeAll()
+                            for roll in self.resultsData {
+                                self.results.append(Int(roll.result))
+                            }
                         }
                     }
                     
@@ -77,26 +87,46 @@ struct ContentView: View {
         }
     }
     
+    func removeResults(at offsets: IndexSet) {
+        for index in offsets {
+            let roll = resultsData[index]
+            moc.delete(roll)
+        }
+        do {
+            try moc.save()
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
     func rollDices() {
-        rolledResult = 0
-        results.removeAll()
-        
+        removeResults(at: IndexSet(integersIn: 0..<resultsData.count))
+      
         switch diceQuantitySelection {
         case 0:
+            let roll = Roll(context: moc)
             let number = Int.random(in: 1...Int(dice.sides[diceSideSelection])!)
-            rolledResult = number
-            results.append(rolledResult)
+            roll.id = UUID()
+            roll.diceNumber = 1
+            roll.result = Int16(number)
+            try? moc.save()
         case 1:
-            for _ in 0...1 {
+            for i in 0...1 {
+                let roll = Roll(context: moc)
                 let number = Int.random(in: 1...Int(dice.sides[diceSideSelection])!)
-                rolledResult = number
-                results.append(rolledResult)
+                roll.id = UUID()
+                roll.diceNumber = Int16(i) + 1
+                roll.result = Int16(number)
+                try? moc.save()
             }
         case 2:
-            for _ in 0...2 {
+            for i in 0...2 {
+                let roll = Roll(context: moc)
                 let number = Int.random(in: 1...Int(dice.sides[diceSideSelection])!)
-                rolledResult = number
-                results.append(rolledResult)
+                roll.id = UUID()
+                roll.diceNumber = Int16(i) + 1
+                roll.result = Int16(number)
+                try? moc.save()
             }
         default:
             break

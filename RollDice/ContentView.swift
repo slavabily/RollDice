@@ -15,10 +15,11 @@ struct ContentView: View {
     
     var dice = Dice()
     
-    @State private var rolledResult = 0
+    @State private var rotationAmount = 0.0
     @State private var diceSideSelection = 0
     @State private var diceQuantitySelection = 0
     @State private var results = [Int]()
+    @State private var feedback = UINotificationFeedbackGenerator()
     
     let diceQuantity = ["1", "2", "3"]
     
@@ -44,10 +45,23 @@ struct ContentView: View {
                         }
                         
                         Section {
-                            Button("Roll") {
+                            Button(action: {
                                 self.rollDices()
+                                self.rollTapped()
+                            }, label: {
+                                HStack {
+                                    Text("Roll")
+                                        .font(.largeTitle)
+                                    
+                                    Spacer()
+                                    Image(systemName: "hexagon")
+                                        .scaleEffect(2)
+                                        .rotationEffect(Angle(degrees: rotationAmount))
+                                }
+                            })
+                                .onAppear {
+                                    self.feedback.prepare()
                             }
-                            .font(.largeTitle)
                         }
                     }
                 }
@@ -85,6 +99,13 @@ struct ContentView: View {
             }
             .tag(1)
         }
+    }
+    
+    func rollTapped() {
+        withAnimation(.easeOut(duration: 1)) {
+            self.rotationAmount += 360
+        }
+        feedback.notificationOccurred(.success)
     }
     
     func removeResults(at offsets: IndexSet) {

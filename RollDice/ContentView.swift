@@ -60,11 +60,32 @@ struct ContentView: View {
                                 HStack {
                                     Text("Roll")
                                         .font(.largeTitle)
-                                    
                                     Spacer()
-                                    Image(systemName: "hexagon")
-                                        .scaleEffect(2)
-                                        .rotationEffect(Angle(degrees: rotationAmount))
+                                         if diceQuantitySelection == 0 {
+                                            Image(systemName: "hexagon")
+                                                .scaleEffect(2)
+                                                .rotationEffect(Angle(degrees: rotationAmount))
+                                        } else if diceQuantitySelection == 1 {
+                                            Image(systemName: "hexagon")
+                                                .scaleEffect(2)
+                                                .rotationEffect(Angle(degrees: rotationAmount))
+                                            Spacer()
+                                            Image(systemName: "hexagon")
+                                                .scaleEffect(2)
+                                                .rotationEffect(Angle(degrees: rotationAmount))
+                                        } else {
+                                            Image(systemName: "hexagon")
+                                                .scaleEffect(2)
+                                                .rotationEffect(Angle(degrees: rotationAmount))
+                                            Spacer()
+                                            Image(systemName: "hexagon")
+                                                .scaleEffect(2)
+                                                .rotationEffect(Angle(degrees: rotationAmount))
+                                            Spacer()
+                                            Image(systemName: "hexagon")
+                                                .scaleEffect(2)
+                                                .rotationEffect(Angle(degrees: rotationAmount))
+                                        }
                                 }
                             })
                                 .onAppear {

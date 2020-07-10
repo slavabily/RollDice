@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct Dice   {
-    let sides = ["4", "6", "8"]
+    let sides = ["6", "8", "12"]
 }
 
  

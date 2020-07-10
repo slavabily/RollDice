@@ -13,6 +13,7 @@ struct ContentView: View {
     @Environment(\.managedObjectContext) var moc
     @FetchRequest(entity: Roll.entity(), sortDescriptors: [NSSortDescriptor(key: "diceNumber", ascending: true)]) var resultsData: FetchedResults<Roll>
     
+    @State private var timer: Timer?
     var dice = Dice()
     
     @State private var rotationAmount = 0.0
@@ -28,7 +29,7 @@ struct ContentView: View {
             NavigationView {
                 VStack {
                     Form {
-                        Section(header: Text("Select the type of dice")) {
+                        Section(header: Text("Select the type of dice").font(.headline)) {
                             Picker(selection: $diceSideSelection, label: Text("")) {
                                 ForEach(0..<dice.sides.count) {
                                     Text(self.dice.sides[$0])
@@ -36,7 +37,7 @@ struct ContentView: View {
                             }.pickerStyle(SegmentedPickerStyle())
                         }
                         
-                        Section(header: Text("Select the quantity of dices")) {
+                        Section(header: Text("Select the quantity of dices").font(.headline)) {
                             Picker(selection: $diceQuantitySelection, label: Text("")) {
                                 ForEach(0..<diceQuantity.count) {
                                     Text(self.diceQuantity[$0])
@@ -46,8 +47,15 @@ struct ContentView: View {
                         
                         Section {
                             Button(action: {
-                                self.rollDices()
-                                self.rollTapped()
+                                self.timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true, block: { (timer) in
+                                    let counter = Int.random(in: 1...Int(self.dice.sides[self.diceSideSelection])!)
+                                    self.rollDices()
+                                    self.rollTapped()
+                                    
+                                    if  counter >= Int(self.dice.sides[self.diceSideSelection])! {
+                                        timer.invalidate()
+                                    }
+                                })
                             }, label: {
                                 HStack {
                                     Text("Roll")
@@ -61,6 +69,11 @@ struct ContentView: View {
                             })
                                 .onAppear {
                                     self.feedback.prepare()
+                            }
+                        }
+                        Section {
+                            ForEach(resultsData, id: \.id) { roll in
+                                Text("Dice \(roll.diceNumber):     \(roll.result)")
                             }
                         }
                     }
@@ -102,7 +115,7 @@ struct ContentView: View {
     }
     
     func rollTapped() {
-        withAnimation(.easeOut(duration: 1)) {
+        withAnimation(.easeOut(duration: 0.5)) {
             self.rotationAmount += 360
         }
         feedback.notificationOccurred(.success)
